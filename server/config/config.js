@@ -6,4 +6,6 @@ if (env === "development") {
 } else if (env === "test") {
     process.env.PORT = 3000;
     process.env.MONGODB_URI = "mongodb://burzo:mihili123@ds139193.mlab.com:39193/node-todo-api-test"
+} else if (env === "production") {
+    process.env.MONGODB_URI = "mongodb://burzo:mihili123@ds139193.mlab.com:39193/node-todo-api"
 }
