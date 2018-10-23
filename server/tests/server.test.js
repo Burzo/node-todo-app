@@ -10,7 +10,9 @@ const todos = [{
     text: "First test todo"
 }, {
     _id: new ObjectID(),
-    text: "Second test todo"
+    text: "Second test todo",
+    completed: true,
+    completedAt: 333
 }]
 
 //Insert new Todos and delete old ones.
@@ -106,5 +108,14 @@ describe("DELETE /todos/:id", () => {
         .get(`/todos/${ranID.toHexString()}`)
         .expect(404)
         .end(done)
+    })
+})
+
+describe("PATCH /todos/:id", () => {
+    it("should update the todo", done => {
+        var ranID = todos[1]._id.toHexString()
+    })
+    it("should clear completedAt when todo is not completed", done => {
+
     })
 })
