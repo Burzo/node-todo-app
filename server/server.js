@@ -4,7 +4,7 @@ const {ObjectID} = require("mongodb")
 
 var {mongoose} = require("./db/mongoose.js");
 var {Todo} = require("./models/todo")
-var {User} = require("./models/user")
+var {User} = require("./models/todo")
 
 var app = express()
 
@@ -33,12 +33,12 @@ app.get("/todos/:id", (req, res) => {
     if (!ObjectID.isValid(req.params.id)) {
         return res.status(404).send()
     }
-    User.findById(req.params.id)
-    .then(user => {
-        if (!user) {
+    Todo.findById(req.params.id)
+    .then(todo => {
+        if (!todo) {
             return res.status(404).send("ni usera, id je prou") 
         }
-        res.send({user})
+        res.send({todo})
     })
     .catch(e => {res.status(400).send()})
 })
