@@ -43,8 +43,18 @@ app.get("/todos/:id", (req, res) => {
     })
     .catch(e => {res.status(400).send()})
 })
-//WRONG ID 5bcd0a2e94f34532a0ca3563
-//CORECT ID 5bcc8a12d79474249cffc0bb
+
+app.delete("/todos/:id", (req, res) => {
+    if (!ObjectID.isValid(req.params.id)) {
+        return res.status(404).send()
+    }
+    Todo.findByIdAndDelete(req.params.id).then((todo) => {
+        if (!todo) {
+            return res.status(404).send()
+        }
+        return res.send(todo)
+    }).catch(e => {res.status(400).send()})
+})
 
 app.listen(port, () => {
     console.log(`--------Started on port ${port}--------`)
