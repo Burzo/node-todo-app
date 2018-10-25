@@ -71,6 +71,32 @@ UserSchema.statics.findByToken = function (token) {
     })
 }
 
+UserSchema.statics.findByCredentials = function (email, password) {
+    return this.findOne({email}).then(user => {
+        if (!user) {
+            return Promise.reject("Baje ni userja")
+        }
+        //bcryptjs.compare(password, user.password).then(res => console.log(res)).catch(e => console.log(e))
+        return new Promise((resolve, reject) => {
+            bcryptjs.compare(password, user.password, (err, res) => {
+                if (res) {
+                    resolve(user)
+                } else {
+                    reject("ocitno se ne ujema") 
+                }
+            })
+        })
+    })
+}
+
+UserSchema.methods.removeToken = function (token) {
+    return this.update({
+        $pull: {
+            tokens: {token}
+        }
+    })
+}
+
 UserSchema.pre("save", function (next) {
     if (this.isModified("password")) {
         bcryptjs.genSalt(10, (err, salt) => {
